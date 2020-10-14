@@ -20,23 +20,24 @@ import {
 import fbConfig from "./config/fbConfig";
 import firebase from "firebase/app";
 
-const config = {
-  userProfile: "users", // firebase root where user profiles are stored
-  attachAuthIsReady: true, // attaches auth is ready promise to store
-  firebaseStateName: "firebase", // should match the reducer name ('firebase' is default)
+
+
+const profileSpecificProps = {
+  userProfile: 'users',
+  useFirestoreForProfile: true,
 };
 const store = createStore(
   rootReducer,
   compose(
     applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
-    reduxFirestore(fbConfig)
-    // reactReduxFirebase(firebase, config)
+    reduxFirestore(firebase, fbConfig),
+    // reactReduxFirebase(firebase, fbConfig)
   )
   // applyMiddleware([thunk.withExt1raArgument(getFirebase)])
 );
 const rrfProps = {
   firebase,
-  config: fbConfig,
+  config: profileSpecificProps,
   dispatch: store.dispatch,
   createFirestoreInstance,
 };
@@ -46,7 +47,8 @@ function AuthIsLoaded({ children }) {
   if (!isLoaded(auth)) return <div>Loading Screen...</div>;
   return children;
 }
-// store.firebaseAuthIsReady.then(() => {
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -59,7 +61,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
-// })
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

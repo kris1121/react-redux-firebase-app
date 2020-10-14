@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
+
 var config = {
     apiKey: "AIzaSyDeIZCmhPpGRK5iW97pG1TZydwxQhX8J-w",
     authDomain: "mario-plan-6da67.firebaseapp.com",
@@ -14,6 +15,6 @@ var config = {
   };
   // Initialize Firebase
   firebase.initializeApp(config);
-//   firebase.firestore().settings({ timestampsInSnapshots: true })
+  // firebase.firestore()
 
   export default firebase
